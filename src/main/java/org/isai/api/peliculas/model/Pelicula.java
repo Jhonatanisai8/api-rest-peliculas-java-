@@ -11,7 +11,7 @@ public class Pelicula {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name = "titulo", nullable = false)
     private String titulo;
     @Column(name = "director", nullable = false)
@@ -26,7 +26,7 @@ public class Pelicula {
     public Pelicula() {
     }
 
-    public Pelicula(Long id, String titulo, String director, int anioEstreno, String genero, String sinopsis) {
+    public Pelicula(Integer id, String titulo, String director, int anioEstreno, String genero, String sinopsis) {
         this.id = id;
         this.titulo = titulo;
         this.director = director;
@@ -43,11 +43,11 @@ public class Pelicula {
         this.sinopsis = sinopsis;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
