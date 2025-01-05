@@ -42,13 +42,15 @@ public class PeliculaController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updatePelicula(@RequestBody Pelicula pelicula, @PathVariable Integer id) {
+    @PutMapping("/{idPelicula}")
+    public ResponseEntity<?> updatePelicula(@RequestBody Pelicula pelicula, @PathVariable Integer idPelicula) {
         try {
-            service.updatePelicula(pelicula, id);
-            return new ResponseEntity<Pelicula>(service.getPelicula(id), HttpStatus.OK);
+            service.updatePelicula(pelicula, idPelicula);
+            return new ResponseEntity<Pelicula>(service.getPelicula(idPelicula), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity< Pelicula>(HttpStatus.NOT_FOUND);//no se encontro
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Pelicula no encontrado con ID: " + idPelicula);
         }
     }
 
