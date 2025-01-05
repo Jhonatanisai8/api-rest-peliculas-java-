@@ -36,7 +36,9 @@ public class PeliculaController {
         try {
             return new ResponseEntity<Pelicula>(service.getPelicula(idPelicula), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity< Pelicula>(HttpStatus.NOT_FOUND);//no se encontro
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Pelicula no encontrado con ID: " + idPelicula);
         }
     }
 
@@ -53,10 +55,14 @@ public class PeliculaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePelicula(@PathVariable Integer id) {
         try {
-            service.deletePelicula(id);
-            return new ResponseEntity<Pelicula>(service.getPelicula(id), HttpStatus.NO_CONTENT);
+            Pelicula pl = service.deletePelicula(id);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(pl);
         } catch (Exception e) {
-            return new ResponseEntity< Pelicula>(HttpStatus.NOT_FOUND);//no se encontro
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Pelicula no encontrada con el ID: " + id);
         }
     }
 
