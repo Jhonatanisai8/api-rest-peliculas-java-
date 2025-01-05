@@ -37,8 +37,9 @@ public class PeliculaSevice {
     }
 
     public Pelicula deletePelicula(Integer id) {
-        repositiryPelicula.delete(getPelicula(id));
-        return getPelicula(id);
+        Pelicula p = getPelicula(id);
+        repositiryPelicula.delete(p);
+        return p;
     }
 
 }
