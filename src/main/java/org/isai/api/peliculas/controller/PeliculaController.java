@@ -1,6 +1,6 @@
 package org.isai.api.peliculas.controller;
 
-import jakarta.persistence.EntityNotFoundException;
+import java.net.URI;
 import java.util.List;
 import org.isai.api.peliculas.model.Pelicula;
 import org.isai.api.peliculas.service.PeliculaSevice;
@@ -15,25 +15,35 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/peliculas")
 public class PeliculaController {
-    
+
     @Autowired
     private PeliculaSevice service;
-    
+
     @PostMapping
     public ResponseEntity<?> registrerPelicula(@RequestBody Pelicula pelicula) {
         service.registrerPelicula(pelicula);
-        return ResponseEntity.status(HttpStatus.CREATED).body(pelicula);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{idPelicula}")
+                .buildAndExpand(pelicula.getId())
+                .toUri(); //finaliza la construccion de la URI 
+
+        return ResponseEntity
+                .created(location)
+                .build();//retornamos el codigo de respuesta
     }
-    
+
     @GetMapping
     public List<Pelicula> getAllPelicula() {
         return service.getAllPelicula();
     }
-    
+
     @GetMapping("/{idPelicula}")
     public ResponseEntity<?> getPelicula(@PathVariable Integer idPelicula) {
         try {
@@ -44,7 +54,7 @@ public class PeliculaController {
                     .body("Pelicula no encontrado con ID: " + idPelicula);
         }
     }
-    
+
     @PutMapping("/{idPelicula}")
     public ResponseEntity<?> updatePelicula(@RequestBody Pelicula pelicula, @PathVariable Integer idPelicula) {
         try {
@@ -56,7 +66,7 @@ public class PeliculaController {
                     .body("Pelicula no encontrado con ID: " + idPelicula);
         }
     }
-    
+
     @DeleteMapping("/{idPelicula}")
     public ResponseEntity<?> deletePelicula(@PathVariable Integer idPelicula) {
         try {
