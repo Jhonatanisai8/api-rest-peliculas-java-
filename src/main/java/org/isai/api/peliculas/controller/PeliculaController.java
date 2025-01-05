@@ -33,10 +33,15 @@ public class PeliculaController {
                 .path("/{idPelicula}")
                 .buildAndExpand(pelicula.getId())
                 .toUri(); //finaliza la construccion de la URI 
+//retornamos el codigo de respuesta
+//        return ResponseEntity
+//                .created(location)
+//                .build();
 
+//para retornar el objeto en el body
         return ResponseEntity
                 .created(location)
-                .build();//retornamos el codigo de respuesta
+                .body(pelicula);
     }
 
     @GetMapping
