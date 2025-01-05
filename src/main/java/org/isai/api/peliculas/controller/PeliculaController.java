@@ -76,7 +76,9 @@ public class PeliculaController {
     public ResponseEntity<?> deletePelicula(@PathVariable Integer idPelicula) {
         try {
             service.deletePelicula(idPelicula);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity
+                    .status(HttpStatus.NO_CONTENT)
+                    .build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).
                     body("Pelicula no encontrada con ID: " + idPelicula);
